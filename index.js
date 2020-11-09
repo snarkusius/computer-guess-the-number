@@ -1,16 +1,49 @@
 const MAX_NUMBER = 100
 const MIN_NUMBER = 0
+const Start_Number = 50
+let computerGuess 
+let minGuess
+let maxGuess
 
-let guess
+function reset(){
+    computerGuess = Start_Number
+    minGuess = MIN_NUMBER
+    maxGuess = MAX_NUMBER
+}
+function binaryGuess(min,max){
+    return min + Math.floor((max-min)/2)
+}
+function randumGuess(min,max){
+    return min + Math.floor(Math.random()*(max - min)) 
+}
+function badGuess(isHig){
+    if (isHig){
+        return computerGuess-1
+    }
+    else{
+        return computerGuess+1
+    }
+}
+
+
 
 document.getElementById('too-high-btn').addEventListener('click', function () {
     // Vad ska hända när man tryckt too high?
+    maxGuess = computerGuess
+    computerGuess = binaryGuess(minGuess,maxGuess)
 
+    setMessage(`Is it ${computerGuess}?`)
 })
 
+document.getElementById('is-correct-btn').addEventListener('click', function () {
+    // Vad ska hända när man tryckt corekt?
+    setMessage("wohoo!")
+
+})
 document.getElementById('too-low-btn').addEventListener('click', function () {
-    // Vad ska hända när man tryckt too low?
-    
+    minGuess = computerGuess
+    computerGuess = binaryGuess(minGuess,maxGuess)
+    setMessage(`Is it ${computerGuess}?`)
 })
 
 
@@ -19,12 +52,11 @@ function setMessage(msg) {
 }
 
 function start() {
+    console.log("supp")
     document.getElementById('before-start').style.display = 'none'
     document.querySelector('main').style.display = 'block'
-
-    guess = 0
-
-    // setMessage(`Is it ${guess}?`)
+    reset()
+    setMessage(`Is it ${computerGuess}?`)
 }
 
 document
